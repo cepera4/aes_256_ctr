@@ -1,0 +1,1 @@
+.\AES_256_CTR.exe hello.txt hello_e.txt 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824 encrypt hello_e.txt hello_d.txt 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824 decrypt
