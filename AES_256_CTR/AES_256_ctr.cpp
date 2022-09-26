@@ -182,7 +182,7 @@ namespace
 			io_words[i] ^= i_key[i];
 	}
 
-	void encryptBlock(const aes256_key_expanded& i_key_expanded, aes_block& io_block)
+	void encrypt_block(const aes256_key_expanded& i_key_expanded, aes_block& io_block)
 	{
 		const uint32_t* key_as_words = reinterpret_cast<const uint32_t*>(i_key_expanded.data());
 		uint32_t* block_as_words = reinterpret_cast<uint32_t*>(io_block.data());
@@ -248,7 +248,7 @@ void AES_256_ctr::encrypt(std::vector<uint8_t>& io_data)
 				((io_data.size() % NUM_BYTES_IN_BLOCK) == 0) ? NUM_BYTES_IN_BLOCK : static_cast<int>(io_data.size()) % NUM_BYTES_IN_BLOCK;
 
 			make_ctr_block(m_nonce, m_processed_blocks + i, ctr_block);
-			encryptBlock(key_expanded, ctr_block);
+			encrypt_block(key_expanded, ctr_block);
 			for (int j = 0; j < num_bytes; ++j)
 				io_data[i * num_bytes + j] = ctr_block[j] ^ io_data[i * num_bytes + j];
 		}
