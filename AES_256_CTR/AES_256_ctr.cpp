@@ -223,15 +223,15 @@ AES_256_ctr::AES_256_ctr(std::shared_ptr<encryption_key_base const> i_key, std::
 	m_processed_blocks(0),
 	m_key(std::move(i_key)),
 	m_nonce(i_nonce ? i_nonce.value() : std::chrono::high_resolution_clock::now().time_since_epoch().count())
-{}
+{
+	if (m_key->num_of_bits_in_key() != NUM_BITS_IN_KEY)
+		throw std::invalid_argument(("Key must be " + std::to_string(NUM_BITS_IN_KEY) + " bits long").c_str());
+}
 
 int64_t AES_256_ctr::get_nonce() const { return m_nonce; }
 
 void AES_256_ctr::encrypt(std::vector<uint8_t>& io_data)
 {
-	if (m_key->num_of_bits_in_key() != NUM_BITS_IN_KEY)
-		throw std::invalid_argument(("Key must be " + std::to_string(NUM_BITS_IN_KEY) + " bits long").c_str());
-
 	aes256_key_expanded key_expanded;
 	key256_expansion(m_key->data(), key_expanded);
 
